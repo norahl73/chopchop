@@ -29,7 +29,7 @@
       </nav>
     </header>
 
-    <!-- Main Content -->
+    <!-- Register new user -->
     <main class="login-container">
         <h1>Create Your Account</h1>
         <p>Join ChopChop Today</p>

@@ -1,4 +1,5 @@
 <?php
+    //Handles the database connection for the Chop app.
     require_once 'config.php';
 
     try {

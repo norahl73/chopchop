@@ -10,7 +10,7 @@
     <!-- Eyebrow Navigation -->
     <header class="header">
       <nav class="main-nav">
-        <a class="logo" href="index.html">
+        <a class="logo" href="/chop/index.php?url=home">
           <img
             src="/chop/assets/logo.svg"
             alt="ChopChop logo"
@@ -54,7 +54,7 @@
       <section id="gridView" class="view">
         <div class="grid">
           <?php foreach ($favorites as $recipe): ?>
-          <article class="card" data-id="1">
+          <article class="card" data-target="modal-<?= $recipe['id'] ?>">
             <div class="card-top">
               <span class="dish"><?= htmlspecialchars($recipe['title']) ?></span>
               <button class="moreBtn">⋯</button>
@@ -72,17 +72,52 @@
       <section id="listView" class="view hidden">
         <ul class="list">
           <?php foreach ($favorites as $recipe): ?>
-          <li class="list-item">
+          <li class="list-item" data-target="modal-<?= $recipe['id'] ?>">
             <img src="<?= htmlspecialchars($recipe['image_path'] ?: '/chop/assets/food.jpg') ?>" alt="Thumbnail for <?= htmlspecialchars($recipe['title']) ?>" class="list-thumb" />
             <div class="list-content">
               <h3><?= htmlspecialchars($recipe['title']) ?></h3>
               <p><?= htmlspecialchars($recipe['genre']) ?> · <?= htmlspecialchars($recipe['time_takes']) ?> min</p>
             </div>
+            <button class="openDetail button">Open</button>
             <button class="moreBtn">⋯</button>
           </li>
           <?php endforeach; ?>
         </ul>
       </section>
+
+      <!-- Recipe Detail modal -->
+      <?php foreach ($favorites as $recipe): ?>
+        <div id="modal-<?= $recipe['id'] ?>" class="modal hidden">
+          <div class="modal-content recipe-modal-content">
+            <button class="close-btn" data-target="modal-<?= $recipe['id'] ?>">×</button>
+
+            <img src="<?= $recipe['image_path'] ? htmlspecialchars($recipe['image_path']) : '/chop/assets/food.jpg' ?>"
+                alt="<?= htmlspecialchars($recipe['title']) ?>" class="recipe-modal-img" />
+
+            <h2><?= htmlspecialchars($recipe['title']) ?></h2>
+            <p><strong>Genre:</strong> <?= htmlspecialchars($recipe['genre']) ?></p>
+            <p><strong>Time:</strong> <?= htmlspecialchars($recipe['time_takes']) ?> minutes</p>
+
+            <h3>Ingredients</h3>
+            <ul>
+              <?php
+                $ingredients = json_decode($recipe['ingredients'], true) ?: [];
+                foreach ($ingredients as $ingredient): ?>
+                <li><?= htmlspecialchars($ingredient) ?></li>
+              <?php endforeach; ?>
+            </ul>
+
+            <h3>Instructions</h3><br />
+            <p><?= (htmlspecialchars($recipe['instructions'])) ?></p>
+
+            <form method="POST" action="/chop/index.php?url=favorites">
+              <input type="hidden" name="remove_recipe" value="1">
+              <input type="hidden" name="recipe_id" value="<?= $recipe['id'] ?>">
+              <button type="submit" class="button favorite-btn">Remove from Favorites</button>
+            </form>
+          </div>
+        </div>
+      <?php endforeach; ?>
 
       <!-- Recipe Actions Modal -->
       <!-- Addresses Recipe editing and detail viewing functionality -->
@@ -91,7 +126,7 @@
           <h3>Recipe Actions</h3>
           <p>What would you like to do with this recipe?</p>
           <div class="modal-actions">
-            <button id="openDetail" class="button">Open</button>
+            <button id="openDetailBtn" class="button">Open</button>
             <button id="editRecipe" class="button secondary">Edit</button>
             <button id="closeModal" class="button tertiary">Close</button>
           </div>
@@ -101,61 +136,37 @@
       <!-- Add Recipe Modal -->
       <!-- Addresses adding recipe to library functionality -->
       <!-- also handles user data entry -->
-      <button id="addRecipeBtn" class="floating-add-btn">+</button>
       <div id="addRecipeModal" class="modal hidden">
-          <div class="modal-content">
+            <div class="modal-content">
               <button id="closeAddModal" class="close-btn">×</button>
-              <h3>Add New Recipe</h3>
+              <h2>Add a New Recipe</h2>
+              <form method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="add_recipe" value="1">
               
-              <form id="addRecipeForm" method="POST" action="/chop/index.php?url=favorites" enctype="multipart/form-data">
-                  <input type="hidden" name="add_recipe" value="1">
-                  
-                  <label for="title">Recipe Title</label>
-                  <input type="text" id="title" name="title" required>
-                  
-                  <label for="genre">Genre/Category</label>
-                  <input type="text" id="genre" name="genre" required>
-                  
-                  <label for="time_takes">Cooking Time (minutes)</label>
-                  <input type="number" id="time_takes" name="time_takes" required>
-                  
-                  <label for="instructions">Instructions</label>
-                  <textarea id="instructions" name="instructions" required></textarea>
-                  
-                  <label for="image">Recipe Image (optional)</label>
-                  <input type="file" id="image" name="image" accept="image/*">
-                  
-                  <label for="ingredient">Ingredient</label>
-                  <input type="text" id="ingredient" name="ingredients[]" placeholder="e.g., flour">
-                  
-                  <label for="amount">Amount</label>
-                  <input type="number" id="amount" name="amounts[]" placeholder="e.g., 2">
-                  
-                  <label for="unit">Unit</label>
-                  <select id="unit" name="units[]">
-                      <option value="lb">lb</option>
-                      <option value="oz">oz</option>
-                      <option value="ml">ml</option>
-                  </select>
+              <label for="title">Recipe Title</label>
+              <input type="text" id="title" name="title" required> <br />
 
-                  <div class="form-actions">
-                      <button type="button" id="addIngredient" class="button secondary">
-                          + Add Another Ingredient
-                      </button>
-                      <button type="submit" class="button">Save Recipe</button>
-                  </div>
-              </form>
-              
-              <!-- Display errors/success messages -->
-              <?php if ($error): ?>
-                  <div class="error-message"><?= htmlspecialchars($error) ?></div>
-              <?php endif; ?>
-              
-              <?php if ($success): ?>
-                  <div class="success-message"><?= htmlspecialchars($success) ?></div>
-              <?php endif; ?>
+              <label for="genre">Genre</label>
+              <input type="text" id="genre" name="genre" required><br />
+
+              <label for="time_takes">Time (minutes)</label>
+              <input type="number" id="time_takes" name="time_takes" required><br />
+
+              <label>Ingredients</label>
+              <div id="ingredient-list">
+              <input type="text" name="ingredients[]" placeholder="Ingredient 1" required>
+              </div>
+              <button type="button" id="addIngredientBtn" class="button secondary">+ Add Ingredient</button><br />
+
+              <label for="instructions">Instructions</label><br />
+              <textarea id="instructions" name="instructions" required></textarea><br />
+
+              <label for="image">Upload Image</label>
+              <input type="file" id="image" name="image" accept="image/*"><br />
+
+              <button type="submit" class="button">Add Recipe</button>
+            </form>
           </div>
-      </div>
       </div>
     </main>
 
@@ -178,69 +189,109 @@
         view.classList.remove("hidden");
       }
 
-      // Recipe actions modal
-      const recipeModal = document.getElementById("recipeActions");
+      document.addEventListener("DOMContentLoaded", () => {
+        // Add Recipe Modal
+        const addModal = document.getElementById("addRecipeModal");
+        document.getElementById("addBtn").addEventListener("click", () => addModal.classList.remove("hidden"));
+        document.getElementById("closeAddModal").addEventListener("click", () => addModal.classList.add("hidden"));
 
-      document.querySelectorAll(".moreBtn").forEach((btn) => {
-        btn.onclick = () => {
-          recipeModal.classList.remove("hidden");
+        // Ingredient Fields
+        const list = document.getElementById("ingredient-list");
+        document.getElementById("addIngredientBtn").addEventListener("click", () => {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.name = "ingredients[]";
+          input.placeholder = "Ingredient";
+          list.appendChild(input);
+        });
+
+        // Click on grid cards to open their modals
+        document.querySelectorAll(".card").forEach(card => {
+          card.addEventListener("click", (e) => {
+            if (e.target.classList.contains('moreBtn')) {
+              return; // Don't open modal if more button was clicked
+            }
+            const targetId = card.dataset.target;
+            if (targetId) {
+              document.getElementById(targetId).classList.remove("hidden");
+            }
+          });
+        });
+
+        // Click on "Open" buttons in list view to open recipe details
+        document.querySelectorAll(".openDetail").forEach(button => {
+          button.addEventListener("click", (e) => {
+            e.stopPropagation(); // Prevent triggering list item click
+            const listItem = button.closest('.list-item');
+            const targetId = listItem.dataset.target;
+            if (targetId) {
+              document.getElementById(targetId).classList.remove("hidden");
+            }
+          });
+        });
+
+        // Click on list items to open their modals
+        document.querySelectorAll(".openDetail").forEach(button => {
+          button.addEventListener("click", (e) => {
+            e.stopPropagation(); // Prevent triggering list item click
+            const listItem = button.closest('.list-item');
+            if (listItem && listItem.dataset.target) {
+              const targetId = listItem.dataset.target;
+              const modal = document.getElementById(targetId);
+            }
+          });
+        });
+
+        // Recipe actions modal for more buttons
+        const recipeModal = document.getElementById("recipeActions");
+        let currentRecipeId = null;
+
+        document.querySelectorAll(".moreBtn").forEach((btn) => {
+          btn.onclick = (e) => {
+            e.stopPropagation(); // Prevent card/list item click event
+            
+            // Find the recipe ID from the parent element
+            const parent = btn.closest('.card') || btn.closest('.list-item');
+            if (parent && parent.dataset.target) {
+              currentRecipeId = parent.dataset.target.replace('modal-', '');
+            }
+            
+            recipeModal.classList.remove("hidden");
+          };
+        });
+
+        // Open detail from recipe actions modal
+        document.getElementById("openDetailBtn").onclick = () => {
+          if (currentRecipeId) {
+            document.getElementById(`modal-${currentRecipeId}`).classList.remove("hidden");
+          }
+          recipeModal.classList.add("hidden");
         };
+
+        document.getElementById("closeModal").onclick = () => {
+          recipeModal.classList.add("hidden");
+        };
+
+        // Close buttons for all modals
+        document.querySelectorAll(".close-btn").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = btn.dataset.target;
+            if (targetId) {
+              document.getElementById(targetId).classList.add("hidden");
+            } else {
+              btn.closest('.modal').classList.add("hidden");
+            }
+          });
+        });
+
+        // Click outside modal to close
+        document.querySelectorAll(".modal").forEach(m => {
+          m.addEventListener("click", e => {
+            if (e.target === m) m.classList.add("hidden");
+          });
+        });
       });
-
-      document.getElementById("closeModal").onclick = () => {
-        recipeModal.classList.add("hidden");
-      };
-
-      // Add recipe modal
-      const addModal = document.getElementById("addRecipeModal");
-      const addForm = document.getElementById("addRecipeForm");
-
-      // Open modal from both buttons
-      document.getElementById("addRecipeBtn").onclick = openAddModal;
-      document.getElementById("addBtn").onclick = openAddModal;
-
-      function openAddModal() {
-        addModal.classList.remove("hidden");
-      }
-
-      // Close modal
-      document.getElementById("closeAddModal").onclick = () => {
-        addModal.classList.add("hidden");
-      };
-
-      // Close when clicking outside modal
-      addModal.onclick = (e) => {
-        if (e.target === addModal) {
-          addModal.classList.add("hidden");
-        }
-      };
-
-      // Dynamic ingredient fields
-      const ingredientFields = [];
-
-      document.getElementById("addIngredient").onclick = () => {
-        const ingredient = document.getElementById("ingredient").value;
-        const amount = document.getElementById("amount").value;
-        const unit = document.getElementById("unit").value;
-
-        if (ingredient && amount) {
-          // Store the ingredient data
-          ingredientFields.push({ ingredient, amount, unit });
-          
-          // Show confirmation
-          alert(`Added ${amount} ${unit} ${ingredient}`);
-          
-          // Clear the input fields
-          document.getElementById("ingredient").value = "";
-          document.getElementById("amount").value = "";
-          document.getElementById("unit").selectedIndex = 0;
-        } else {
-          alert("Please fill in both ingredient and amount fields");
-        }
-      };
-
-      // Note: Form submission is handled by PHP since we're not using e.preventDefault()
-      // The form will submit normally to the server with all the data
     </script>
   </body>
 </html>

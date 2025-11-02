@@ -34,7 +34,7 @@
       </nav>
     </header>
 
-    <!-- Main Content -->
+    <!-- Login -->
     <main class="login-container">
         <h1>Welcome to ChopChop</h1>
         <p>Your Personal Recipe Library</p>
