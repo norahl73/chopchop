@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- URL to cs4640 server: https://cs4640.cs.virginia.edu/mbv7xs/chopchop/ -->
+    <!-- URL to cs4640 server: https://cs4640.cs.virginia.edu/mbv7xs/ -->
     <meta
       name="author"
       content="Norah Lee: Favorites and Index html and css. Faniel Embaye: shoppinglist and recipelibrary html"
@@ -9,15 +9,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ChopChop - Login</title>
-    <link rel="stylesheet" href="/chop/styles/index.css">
+    <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
     <!-- Header -->
     <header class="header">
       <nav class="main-nav">
-        <a class="logo" href="/chop/index.php?url=home">
+        <a class="logo" href="index.php?url=home">
           <img
-            src="/chop/assets/logo.svg"
+            src="assets/logo.svg"
             alt="ChopChop logo"
             width="36"
             height="36"
@@ -39,7 +39,7 @@
         <h1>Welcome to ChopChop</h1>
         <p>Your Personal Recipe Library</p>
         
-        <form method="POST" action="/chop/index.php?url=login">
+        <form method="POST" action="index.php?url=login">
             <?php if (isset($error)): ?>
                 <div class="error"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
@@ -53,7 +53,7 @@
             <button type="submit" class="button">Login</button>
         </form>
         
-        <p>Don't have an account? <a href="/chop/index.php?url=register">Sign up</a></p>
+        <p>Don't have an account? <a href="index.php?url=register">Sign up</a></p>
     </main>
 
     <!-- Footer -->

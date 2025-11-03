@@ -1,10 +1,11 @@
 <?php
 // URL to cs4640 server: https://cs4640.cs.virginia.edu/mbv7xs/chopchop/
     // front controller
+
     require_once __DIR__ . '/db.php';
-    require_once __DIR__ . '/models/Recipe.php';
-    require_once __DIR__ . '/models/Favorite.php';
-    require_once __DIR__ . '/models/User.php';
+    require_once __DIR__ . '/models/recipe.php';
+    require_once __DIR__ . '/models/favorite.php';
+    require_once __DIR__ . '/models/user.php';
 
     session_start();
 
@@ -27,7 +28,7 @@
         case 'home':
             // checks if user is already logged in, if so, go to recipe library page
             if (isset($_SESSION['user_id'])) {
-                header('Location: /chop/index.php?url=recipe-library');
+                header('Location: /mbv7xs/chopchop/index.php?url=recipe-library');
                 exit();
             }
             include 'templates/home.php';
@@ -36,7 +37,7 @@
         case 'recipe-library':
             // checks if user is logged in, if not, go to home (login page)
             if (!isset($_SESSION['user_id'])) {
-                header('Location: /chop/index.php?url=home');
+                header('Location: /mbv7xs/chopchop/index.php?url=home');
                 exit();
             }
 
@@ -52,7 +53,7 @@
         case 'favorites':
             // Check if user is logged in
             if (!isset($_SESSION['user_id'])) {
-                header('Location: /chop/index.php?url=home');
+                header('Location: /mbv7xs/chopchop/index.php?url=home');
                 exit();
             }
 
@@ -120,7 +121,7 @@
         case 'shopping-list':
             // Check if user is logged in
             if (!isset($_SESSION['user_id'])) {
-                header('Location: /chop/index.php?url=home');
+                header('Location: /mbv7xs/chopchop/index.php?url=home');
                 exit();
             }
 
@@ -139,14 +140,14 @@
                 if ($user && password_verify($password, $user['password_hash'])) {
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['username'] = $user['username'];
-                    header('Location: /chop/index.php?url=recipe-library');
+                    header('Location: /mbv7xs/chopchop/index.php?url=recipe-library');
                     exit();
                 } else {
                     $error = "Invalid email or password.";
                     include 'templates/home.php';
                 }
             } else {
-                header('Location: /chop/index.php?url=home');
+                header('Location: /mbv7xs/chopchop/index.php?url=home');
                 exit();
             }
             break;
@@ -180,7 +181,7 @@
                         $user = $userModel->findByEmail($email);
                         $_SESSION['user_id'] = $user['id'];
                         $_SESSION['username'] = $user['username'];
-                        header('Location: /chop/index.php?url=recipe-library');
+                        header('Location: /mbv7xs/chopchop/index.php?url=recipe-library');
                         exit();
                     } else {
                         $error = "Registration failed. Please try again.";
@@ -190,15 +191,29 @@
             }
             break;
 
+        case 'profile':
+            if (!isset($_SESSION['user_id'])) {
+                header('Location: /mbv7xs/chopchop/index.php?url=profile');
+                exit();
+            }
+
+            // You can fetch the user data if needed
+            $user_id = $_SESSION['user_id'];
+            $usernaem = $SESSION['user_id'];
+            $user = $userModel->findById($user_id);
+
+            include 'templates/profile.php';
+            break;
+
         case 'logout':
             // destroy session and return to home (login)
             session_destroy();
-            header('Location: /chop/index.php?url=home');
+            header('Location: /mbv7xs/chopchop/index.php?url=home');
             exit();
             break;
 
     default:
-        header('Location: /chop/index.php?url=home');
+        header('Location: /mbv7xs/chopchop/index.php?url=home');
         exit();
         break;
     }

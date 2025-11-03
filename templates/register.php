@@ -4,15 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ChopChop - Register</title>
-    <link rel="stylesheet" href="/chop/styles/index.css">
+    <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
     <!-- Header -->
     <header class="header">
       <nav class="main-nav">
-        <a class="logo" href="/chop/index.php?url=home">
+        <a class="logo" href="index.php?url=home">
           <img
-            src="/chop/assets/logo.svg"
+            src="assets/logo.svg"
             alt="ChopChop logo"
             width="36"
             height="36"
@@ -34,7 +34,7 @@
         <h1>Create Your Account</h1>
         <p>Join ChopChop Today</p>
         
-        <form method="POST" action="/chop/index.php?url=register">
+        <form method="POST" action="index.php?url=register">
             <?php if (isset($error)): ?>
                 <div class="error"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
@@ -54,7 +54,7 @@
             <button type="submit" class="button">Sign Up</button>
         </form>
         
-        <p>Already have an account? <a href="/chop/index.php?url=home">Login</a></p>
+        <p>Already have an account? <a href="index.php?url=home">Login</a></p>
     </main>
 
     <!-- Footer -->

@@ -4,15 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ChopChop - Favorites</title>
-    <link rel="stylesheet" href="/chop/styles/favorites.css" />
+    <link rel="stylesheet" href="styles/favorites.css" />
   </head>
   <body>
     <!-- Eyebrow Navigation -->
     <header class="header">
       <nav class="main-nav">
-        <a class="logo" href="/chop/index.php?url=home">
+        <a class="logo" href="index.php?url=home">
           <img
-            src="/chop/assets/logo.svg"
+            src="assets/logo.svg"
             alt="ChopChop logo"
             width="36"
             height="36"
@@ -22,14 +22,14 @@
 
         <!-- Main Nav -->
         <ul class="nav-links">
-          <li><a href="/chop/index.php?url=recipe-library">Recipe Library</a></li>
+          <li><a href="index.php?url=recipe-library">Recipe Library</a></li>
           <li><a class="active" href="#">Favorites</a></li>
-          <li><a href="/chop/index.php?url=shopping-list">Shopping List</a></li>
+          <li><a href="index.php?url=shopping-list">Shopping List</a></li>
         </ul>
 
         <!-- Profile -->
-        <a class="pfp" href="./profile.html">
-          <img src="/chop/assets/pfp.jpg" alt="Profile" width="36" height="36" />
+        <a class="pfp" href="index.php?url=profile">
+          <img src="assets/pfp.jpg" alt="Profile" width="36" height="36" />
         </a>
       </nav>
     </header>
@@ -59,7 +59,7 @@
               <span class="dish"><?= htmlspecialchars($recipe['title']) ?></span>
               <button class="moreBtn">⋯</button>
             </div>
-            <img src="<?= ($recipe['image_path'] ?: '/chop/assets/food.jpg') ?>" alt="Thumbnail for <?= htmlspecialchars($recipe['title']) ?>" class="thumbnail" />
+            <img src="<?= ($recipe['image_path'] ?: 'assets/food.jpg') ?>" alt="Thumbnail for <?= htmlspecialchars($recipe['title']) ?>" class="thumbnail" />
             <div class="card-body">
               <p class="quickDesc"><?= htmlspecialchars($recipe['genre']) ?> · <?= htmlspecialchars($recipe['time_takes']) ?> min</p>
             </div>
@@ -73,7 +73,7 @@
         <ul class="list">
           <?php foreach ($favorites as $recipe): ?>
           <li class="list-item" data-target="modal-<?= $recipe['id'] ?>">
-            <img src="<?= htmlspecialchars($recipe['image_path'] ?: '/chop/assets/food.jpg') ?>" alt="Thumbnail for <?= htmlspecialchars($recipe['title']) ?>" class="list-thumb" />
+            <img src="<?= htmlspecialchars($recipe['image_path'] ?: 'assets/food.jpg') ?>" alt="Thumbnail for <?= htmlspecialchars($recipe['title']) ?>" class="list-thumb" />
             <div class="list-content">
               <h3><?= htmlspecialchars($recipe['title']) ?></h3>
               <p><?= htmlspecialchars($recipe['genre']) ?> · <?= htmlspecialchars($recipe['time_takes']) ?> min</p>
@@ -91,7 +91,7 @@
           <div class="modal-content recipe-modal-content">
             <button class="close-btn" data-target="modal-<?= $recipe['id'] ?>">×</button>
 
-            <img src="<?= $recipe['image_path'] ? htmlspecialchars($recipe['image_path']) : '/chop/assets/food.jpg' ?>"
+            <img src="<?= $recipe['image_path'] ? htmlspecialchars($recipe['image_path']) : 'assets/food.jpg' ?>"
                 alt="<?= htmlspecialchars($recipe['title']) ?>" class="recipe-modal-img" />
 
             <h2><?= htmlspecialchars($recipe['title']) ?></h2>
@@ -110,7 +110,7 @@
             <h3>Instructions</h3><br />
             <p><?= (htmlspecialchars($recipe['instructions'])) ?></p>
 
-            <form method="POST" action="/chop/index.php?url=favorites">
+            <form method="POST" action="index.php?url=favorites">
               <input type="hidden" name="remove_recipe" value="1">
               <input type="hidden" name="recipe_id" value="<?= $recipe['id'] ?>">
               <button type="submit" class="button favorite-btn">Remove from Favorites</button>
