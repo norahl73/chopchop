@@ -180,9 +180,7 @@
     </footer>
 
     <script>
-      // ===========================================
-      // AJAX FUNCTIONALITY - Load More Recipes
-      // ===========================================
+      // AJAX functionality; load more recipes
       
       // Track loaded recipe IDs to avoid duplicates
       const loadedRecipeIds = new Set();
@@ -323,10 +321,6 @@
 
       // Attach Load More button listener
       document.getElementById('loadMoreBtn').addEventListener('click', loadMoreRecipes);
-
-      // ===========================================
-      // EXISTING FUNCTIONALITY
-      // ===========================================
 
       // View switching
       const gridView = document.getElementById("gridView");
