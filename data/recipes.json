@@ -1,0 +1,52 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "name": "Lasagna",
+      "cuisine": "Italian",
+      "time": 60,
+      "description": "Hearty layers of pasta and cheese",
+      "image": "assets/food.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Sushi Bake",
+      "cuisine": "Japanese",
+      "time": 30,
+      "description": "Spicy mayo, salmon, rice, and nori",
+      "image": "assets/food.jpg"
+    },
+    {
+      "id": 3,
+      "name": "PB&J Sandwich",
+      "cuisine": "American",
+      "time": 10,
+      "description": "Classic sweet and nutty sandwich",
+      "image": "assets/food.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Chicken Tikka Masala",
+      "cuisine": "Indian",
+      "time": 45,
+      "description": "Creamy tomato curry with tender chicken",
+      "image": "assets/food.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Beef Tacos",
+      "cuisine": "Mexican",
+      "time": 25,
+      "description": "Seasoned beef with fresh toppings",
+      "image": "assets/food.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Pad Thai",
+      "cuisine": "Thai",
+      "time": 20,
+      "description": "Stir-fried rice noodles with peanuts",
+      "image": "assets/food.jpg"
+    }
+  ]
+}
