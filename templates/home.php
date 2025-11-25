@@ -60,5 +60,20 @@
     <footer>
       <p>© ChopChop - Your Personal Recipe Library</p>
     </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const title = document.querySelector("h1");
+  if (title) {
+    title.style.opacity = 0;
+    title.style.transition = "opacity 1s ease";
+
+    setTimeout(() => {
+      title.style.opacity = 1;
+    }, 100);
+  }
+});
+</script>
+
 </body>
 </html>

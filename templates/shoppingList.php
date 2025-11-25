@@ -24,9 +24,7 @@
         <ul class="nav-links">
           <li><a href="index.php?url=recipe-library">Recipe Library</a></li>
           <li><a href="index.php?url=favorites">Favorites</a></li>
-          <li>
-            <a class="active" href="index.php?url=shopping-list">Shopping List</a>
-          </li>
+          <li><a class="active" href="index.php?url=shopping-list">Shopping List</a></li>
         </ul>
 
         <!-- Profile -->
@@ -38,75 +36,29 @@
 
     <!-- Main Content -->
     <main class="shopping-main">
-      <div class="page-header">
-        <h1>Shopping List</h1>
-        <p>Keep track of ingredients you need to buy</p>
+      <h1>Your Shopping List</h1>
 
-        <!-- Ahow we can add an item to the list-->
-        <div class="add-item-container">
-          <input
-            type="text"
-            id="newItemInput"
-            placeholder="Add new itemchopchop."
-            class="add-item-input"
-          />
-          <button id="addItemBtn" class="add-item-btn">Add Item</button>
-        </div>
-      </div>
-
-      <!-- the actual Shopping List  -->
       <div class="shopping-list-container">
-        <div class="list-header">
-          <h2>Your Items</h2>
-          <button id="clearAllBtn" class="clear-all-btn">Clear All</button>
+        <!-- Add New Ingredient -->
+        <div class="add-ingredient">
+          <input type="text" id="newItem" placeholder="Add new ingredient..." />
+          <button id="addBtn" class="add-btn">Add</button>
         </div>
 
-        <ul id="shoppingList" class="shopping-list">
-          <!-- Sample items, in list form, to check off (Common ingreidents) -->
-          <li class="shopping-item">
-            <input type="checkbox" id="item1" class="item-checkbox" />
-            <label for="item1" class="item-label">Milk</label>
-            <button class="remove-item-btn">X</button>
-          </li>
+        
+        <ul id="shoppingList" class="ingredient-list"></ul>
 
-          <li class="shopping-item">
-            <input type="checkbox" id="item2" class="item-checkbox" />
-            <label for="item2" class="item-label">Bread</label>
-            <button class="remove-item-btn">X</button>
-          </li>
+        
+        <button id="clearBtn" class="clear-btn">Clear List</button>
+        <button id="sortBtn" class="sort-btn">Sort A–Z</button>
+        <button id="filterBtn" class="filter-btn">Hide Completed</button>
 
-          <li class="shopping-item">
-            <input type="checkbox" id="item3" class="item-checkbox" />
-            <label for="item3" class="item-label">Eggs</label>
-            <button class="remove-item-btn">X</button>
-          </li>
-
-          <li class="shopping-item">
-            <input type="checkbox" id="item4" class="item-checkbox" />
-            <label for="item4" class="item-label">Chicken Breast</label>
-            <button class="remove-item-btn">X</button>
-          </li>
-
-          <li class="shopping-item">
-            <input type="checkbox" id="item5" class="item-checkbox" />
-            <label for="item5" class="item-label">Tomatoes</label>
-            <button class="remove-item-btn">X</button>
-          </li>
-        </ul>
-
-        <!-- Empty state whenever theres none in the list-->
-        <div id="emptyState" class="empty-state" style="display: none">
-          <p>Your shopping list is empty!</p>
-          <p>Add some items above to get started.</p>
-        </div>
-      </div>
-
-      <!-- Quick Add Section, adding common things -->
-      <div class="quick-add-section">
-        <h3>Quick Add Common Items</h3>
-        <div class="quick-add-buttons">
-          <button class="quick-add-btn" data-item="Beef">Beef</button>
-          <button class="quick-add-btn" data-item="Tuna">Tuna</button>
+        <!-- Quick Add Section -->
+        <div class="quick-add">
+          <h3>Quick Add Common Items</h3>
+          <button class="quick-add-btn" data-item="Eggs">Eggs</button>
+          <button class="quick-add-btn" data-item="Milk">Milk</button>
+          <button class="quick-add-btn" data-item="Bread">Bread</button>
           <button class="quick-add-btn" data-item="Rice">Rice</button>
           <button class="quick-add-btn" data-item="Pasta">Pasta</button>
           <button class="quick-add-btn" data-item="Cheese">Cheese</button>
@@ -115,9 +67,109 @@
       </div>
     </main>
 
-    <!-- Footer -->
+  
     <footer>
       <p>(c) ChopChop - Your Personal Recipe Library</p>
     </footer>
+
+    <!-- Shopping list -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const list = document.getElementById("shoppingList");
+      const input = document.getElementById("newItem");
+      const addBtn = document.getElementById("addBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const sortBtn = document.getElementById("sortBtn");
+      const filterBtn = document.getElementById("filterBtn");
+      const quickBtns = document.querySelectorAll(".quick-add-btn");
+
+      // Create a new list item
+      function createListItem(text) {
+        const li = document.createElement("li");
+        li.classList.add("ingredient-item");
+
+        li.innerHTML = `
+          <input type="checkbox" class="check">
+          <span>${text}</span>
+          <button class="remove-btn">✕</button>
+        `;
+
+        // Remove button
+        li.querySelector(".remove-btn").addEventListener("click", () => {
+          li.remove();
+        });
+
+        // Strike-through toggle
+        li.querySelector(".check").addEventListener("change", (e) => {
+          const span = li.querySelector("span");
+          if (e.target.checked) {
+            span.style.textDecoration = "line-through";
+            span.style.color = "#777";
+          } else {
+            span.style.textDecoration = "none";
+            span.style.color = "black";
+          }
+        });
+
+        list.appendChild(li);
+      }
+
+      // Add new typed ingredient
+      addBtn.addEventListener("click", () => {
+        const text = input.value.trim();
+        if (text !== "") {
+          createListItem(text);
+          input.value = "";
+        }
+      });
+
+      // Add using Enter key
+      input.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          addBtn.click();
+        }
+      });
+
+      // Quick-add buttons
+      quickBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          createListItem(btn.dataset.item);
+        });
+      });
+
+      // Clear entire list
+      clearBtn.addEventListener("click", () => {
+        list.innerHTML = "";
+      });
+
+      // Sort alphabetically
+      sortBtn.addEventListener("click", () => {
+        const items = Array.from(list.querySelectorAll("li"));
+        items.sort((a, b) => {
+          const textA = a.querySelector("span").textContent.toLowerCase();
+          const textB = b.querySelector("span").textContent.toLowerCase();
+          return textA.localeCompare(textB);
+        });
+        items.forEach(item => list.appendChild(item));
+      });
+
+      // Filter out completed items
+      let hideCompleted = false;
+      filterBtn.addEventListener("click", () => {
+        hideCompleted = !hideCompleted;
+
+        list.querySelectorAll("li").forEach(item => {
+          const checked = item.querySelector(".check").checked;
+          item.style.display = hideCompleted && checked ? "none" : "flex";
+        });
+
+        filterBtn.textContent = hideCompleted
+          ? "Show Completed"
+          : "Hide Completed";
+      });
+    });
+    </script>
+
   </body>
 </html>

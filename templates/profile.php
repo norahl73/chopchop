@@ -33,16 +33,35 @@
         </a>
       </nav>
     </header>
-    <main class="profile-main">
-    <section class="profile-info">
-      <h1>Your Profile</h1>
-      <p>Welcome, <?= htmlspecialchars($_SESSION['username'] ?? 'Guest') ?>!</p>
 
-      <!-- Logout Button -->
-      <form method="POST" action="index.php?url=logout">
-        <button type="submit" class="button logout-btn">Logout</button>
-      </form>
-    </section>
-  </main>
+    <main class="profile-main">
+      <section class="profile-info">
+        <h1>Your Profile</h1>
+        <p>Welcome, <?= htmlspecialchars($_SESSION['username'] ?? 'Guest') ?>!</p>
+
+        <!-- Logout Button -->
+        <form method="POST" action="index.php?url=logout">
+          <button type="submit" class="button logout-btn">Logout</button>
+        </form>
+      </section>
+    </main>
+
+    <!-- Script -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const logoutBtn = document.querySelector(".logout-btn");
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener("mouseover", () => {
+          logoutBtn.style.transform = "scale(1.05)";
+          logoutBtn.style.transition = "transform 0.2s ease";
+        });
+
+        logoutBtn.addEventListener("mouseout", () => {
+          logoutBtn.style.transform = "scale(1)";
+        });
+      }
+    });
+    </script>
   </body>
 </html>

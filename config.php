@@ -1,4 +1,5 @@
 <?php
+
     class Config {
        public static $db = [
             "host" => "localhost",
@@ -16,12 +17,12 @@
 /*
     class Config {
         public static $db = [
-            "host" => "db",
+            "host" => "localhost",
             "port" => 5432,
-            "user" => "localuser",
-            "pass" => "cs4640LocalUser!",
-            "database" => "example"
+            "user" => "bsc9vq",
+            "pass" => "nCk3wSdpFeo4",
+            "database" => "bsc9vq"
         ];
     }
-        */
+         */
 ?>

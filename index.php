@@ -1,5 +1,6 @@
 <?php
 // URL to cs4640 server: https://cs4640.cs.virginia.edu/mbv7xs/chopchop/
+// https://cs4640.cs.virginia.edu/bsc9vq/chopchop/
     // front controller
 
     require_once __DIR__ . '/db.php';

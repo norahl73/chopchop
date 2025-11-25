@@ -20,7 +20,7 @@
           <span>ChopChop</span>
         </a>
 
-        <!-- Main Nav (disabled on register page) -->
+        <!-- Main Nav -->
         <ul class="nav-links">
           <li><a href="#" class="disabled">Recipe Library</a></li>
           <li><a href="#" class="disabled">Favorites</a></li>
@@ -33,8 +33,8 @@
     <main class="login-container">
         <h1>Create Your Account</h1>
         <p>Join ChopChop Today</p>
-        
-        <form method="POST" action="index.php?url=register">
+
+        <form id="registerForm" method="POST" action="index.php?url=register">
             <?php if (isset($error)): ?>
                 <div class="error"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
@@ -61,5 +61,33 @@
     <footer>
       <p>© ChopChop - Your Personal Recipe Library</p>
     </footer>
+    <script>
+      document.getElementById("registerForm").addEventListener("submit", function (e) {
+        const email = document.getElementById("email").value.trim();
+        const pass = document.getElementById("password").value.trim();
+        const confirm = document.getElementById("confirm_password").value.trim();
+
+        let errors = [];
+
+        if (email === "") {
+          errors.push("Email is required.");
+        }
+        if (!email.includes("@")) {
+          errors.push("Email must be valid.");
+        }
+        if (pass.length < 6) {
+          errors.push("Password must be at least 6 characters.");
+        }
+        if (confirm !== pass) {
+          errors.push("Passwords do not match.");
+        }
+
+        if (errors.length > 0) {
+          e.preventDefault();
+          alert(errors.join("\n"));
+        }
+      });
+    </script>
+
 </body>
 </html>

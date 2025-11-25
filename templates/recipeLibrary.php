@@ -5,7 +5,9 @@
     <meta name="description" content="Welcome to ChopChop!" />
     <link rel="stylesheet" href="styles/index.css" />
     <title>ChopChop - Recipe Library</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   </head>
+
   <body>
     <!-- Header -->
     <header class="header">
@@ -22,9 +24,7 @@
 
         <!-- Main Navigation -->
         <ul class="nav-links">
-          <li>
-            <a class="active" href="recipe-library">Recipe Library</a>
-          </li>
+          <li><a class="active" href="index.php?url=recipe-library">Recipe Library</a></li>
           <li><a href="index.php?url=favorites">Favorites</a></li>
           <li><a href="index.php?url=shopping-list">Shopping List</a></li>
         </ul>
@@ -47,14 +47,14 @@
           <input
             type="text"
             id="searchInput"
-            placeholder="Search recipeschopchop."
+            placeholder="Search for recipes."
             class="search-input"
           />
           <button class="search-btn">Search</button>
         </div>
       </div>
 
-      <!-- Recipe Cards to show what it would look like for meals-->
+      <!-- Recipe Cards -->
       <div class="recipes-grid">
         <?php foreach ($recipes as $recipe): ?>
         <div class="recipe-card">
@@ -73,13 +73,16 @@
           </div>
         </div>
 
-        <!-- Modal for ^ recipe -->
+        <!-- Modal for recipe -->
         <div id="modal-<?= $recipe['id'] ?>" class="modal hidden">
           <div class="modal-content recipe-modal-content">
             <button class="close-btn" data-target="modal-<?= $recipe['id'] ?>">×</button>
 
-            <img src="<?= $recipe['image_path'] ? htmlspecialchars($recipe['image_path']) : 'assets/food.jpg' ?>"
-                alt="<?= htmlspecialchars($recipe['title']) ?>" class="recipe-modal-img" />
+            <img
+              src="<?= $recipe['image_path'] ? htmlspecialchars($recipe['image_path']) : 'assets/food.jpg' ?>"
+              alt="<?= htmlspecialchars($recipe['title']) ?>"
+              class="recipe-modal-img"
+            />
 
             <h2><?= htmlspecialchars($recipe['title']) ?></h2>
             <p><strong>Genre:</strong> <?= htmlspecialchars($recipe['genre']) ?></p>
@@ -90,7 +93,7 @@
               <?php 
                 $ingredients = json_decode($recipe['ingredients'], true) ?: [];
                 foreach ($ingredients as $ingredient): ?>
-                  <li><?= htmlspecialchars($ingredient) ?></li>
+                <li><?= htmlspecialchars($ingredient) ?></li>
               <?php endforeach; ?>
             </ul>
 
@@ -112,31 +115,43 @@
     <footer>
       <p>(c) ChopChop - Your Personal Recipe Library</p>
     </footer>
+
+    <!-- Modal Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".view-recipe-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const targetId = btn.dataset.target;
+            document.getElementById(targetId).classList.remove("hidden");
+          });
+        });
+
+        document.querySelectorAll(".close-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const targetId = btn.dataset.target;
+            document.getElementById(targetId).classList.add("hidden");
+          });
+        });
+
+        document.querySelectorAll(".modal").forEach(modal => {
+          modal.addEventListener("click", e => {
+            if (e.target === modal) modal.classList.add("hidden");
+          });
+        });
+      });
+    </script>
+
+    <!-- jQuery Filtering Script -->
+    <script>
+      $("#searchInput").on("input", function () {
+        const term = $(this).val().toLowerCase();
+
+        $(".recipe-card").each(function () {
+          const title = $(this).find("h3").text().toLowerCase();
+          $(this).toggle(title.includes(term));
+        });
+      });
+    </script>
+
   </body>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Open modal
-      document.querySelectorAll(".view-recipe-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const targetId = btn.dataset.target;
-          document.getElementById(targetId).classList.remove("hidden");
-        });
-      });
-
-      // Close modal
-      document.querySelectorAll(".close-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const targetId = btn.dataset.target;
-          document.getElementById(targetId).classList.add("hidden");
-        });
-      });
-
-      // Close when clicking outside modal content
-      document.querySelectorAll(".modal").forEach(modal => {
-        modal.addEventListener("click", e => {
-          if (e.target === modal) modal.classList.add("hidden");
-        });
-      });
-    });
-  </script>
 </html>
