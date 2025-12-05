@@ -65,8 +65,20 @@
             $error = '';
             $success = '';
 
+            // removing from favorites
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_recipe'])) {
+                $recipe_id = intval($_POST['recipe_id']);
+                $user_id = $_SESSION['user_id'];
+
+                if ($favoriteModel->removeFavorite($user_id, $recipe_id)) {
+                $success = "Recipe removed from favorites.";
+                } else {
+                $error = "Could not remove favorite.";}
+
+            $favorites = $favoriteModel->getFavoritesByUser($user_id);}
+
             // adding to favorites
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recipe_id'])) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recipe_id']) && !isset($_POST['remove_recipe'])) {
                 $recipe_id = intval($_POST['recipe_id']);
                 $user_id = $_SESSION['user_id'];
                 if ($favoriteModel->addFavorite($user_id, $recipe_id)) {
