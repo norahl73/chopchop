@@ -8,7 +8,8 @@ body {
   color: #2b2b2b;
   background: linear-gradient(180deg, #fffdf9, #fff2e8);
 }
-/* header of app (eyebrow nav, main nav, profile) */
+
+/* header */
 .header {
   background-color: #ffffff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -16,6 +17,7 @@ body {
   top: 0;
   z-index: 100;
 }
+
 .main-nav {
   display: flex;
   align-items: center;
@@ -31,6 +33,7 @@ body {
   color: #333;
   font-weight: 700;
 }
+
 .nav-links {
   list-style: none;
   display: flex;
@@ -38,6 +41,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 .nav-links a {
   text-decoration: none;
   color: #333;
@@ -45,18 +49,20 @@ body {
   border-radius: 6px;
   transition: background-color 0.2s;
 }
+
 .nav-links a:hover,
 .nav-links a.active {
-  background-color: #ffe5d0;
-  color: #ff8a4b;
+  background-color: #F5E9DD;
+  color: #9A3E00;
   font-weight: 600;
 }
+
 .pfp img {
   border-radius: 50%;
   object-fit: cover;
 }
 
-/* controls for views, filters, adding recipe, etc. */
+/* Controls */
 .controls {
   justify-content: center;
   display: flex;
@@ -66,7 +72,7 @@ body {
 }
 
 .controls button {
-  background: #ff8a4b;
+  background: #9A3E00;
   border: none;
   padding: 8px 16px;
   border-radius: 20px;
@@ -76,8 +82,9 @@ body {
   transition: background 0.2s, transform 0.1s;
 }
 
-.controls button:hover, button:active {
-  background: #ff6a1f;
+.controls button:hover,
+button:active {
+  background: #6F2A00;
   transform: translateY(-2px);
 }
 
@@ -85,32 +92,35 @@ body {
   display: none !important;
 }
 
-/* Title */
 .hero {
   text-align: center;
   padding: 32px 16px;
 }
+
 .hero h1 {
   font-size: 2.2rem;
-  color: #ff8a4b;
+  color: #9A3E00;
   margin: 0;
 }
 
-/* View states (if section has hidden class, is not visible; used for switching b/w view types */
+/* View modes */
 .hidden {
   display: none !important;
 }
+
 .view {
   display: block;
 }
 
-/* Grid layout */
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   padding: 0 24px 24px;
 }
+
+/* Cards */
 .card {
   background: #fffdf5;
   border-radius: 16px;
@@ -118,48 +128,57 @@ body {
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
 }
+
 .card:hover {
   transform: translateY(-6px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.295);
 }
+
 .card-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px;
 }
+
+/* Dish Tag */
 .dish {
-  background-color: #fff0e6;
-  color: #ff6a1f;
+  background-color: #F5E9DD;
+  color: #9A3E00;
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 999px;
 }
-/* for recipe action options */
+
 .moreBtn {
   background: none;
   border: none;
   font-size: 18px;
   cursor: pointer;
-  color: #999;
+  color: #777;
   padding: 4px;
 }
+
 .moreBtn:hover {
-  color: #ff6a1f;
+  color: #9A3E00;
 }
+
 .thumbnail {
   width: 100%;
   height: 150px;
   object-fit: cover;
 }
+
 .card-body {
   padding: 10px 12px 16px;
 }
+
 .quickDesc {
-  color: #ff8a4b;
+  color: #9A3E00;
   font-weight: 600;
   margin: 0 0 4px 0;
 }
+
 .summary {
   color: #555;
   margin: 0;
@@ -167,23 +186,26 @@ body {
   line-height: 1.4;
 }
 
-/* List view */
+/* LIST VIEW */
 .list {
   list-style: none;
   margin: 0;
   padding: 0 20px;
 }
+
 .list-item {
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 16px;
-  border-bottom: 1px solid #f1e7de;
+  border-bottom: 1px solid #F5E9DD;
   transition: background-color 0.2s;
 }
+
 .list-item:hover {
-  background-color: #fff8f3;
+  background-color: #FFF6EE;
 }
+
 .list-thumb {
   width: 80px;
   height: 80px;
@@ -191,27 +213,31 @@ body {
   border-radius: 8px;
   flex-shrink: 0;
 }
+
 .list-content {
   flex: 1;
 }
+
 .list-content h3 {
   margin: 0 0 4px 0;
   color: #333;
   font-size: 1.1rem;
 }
+
 .list-content p {
   margin: 0;
   color: #666;
   font-size: 0.9rem;
 }
+
 .list-actions {
   display: flex;
   gap: 8px;
   flex-shrink: 0;
 }
-/* Recipe actions for list view*/
+
 .tinyBtn {
-  background: #ff8a4b;
+  background: #9A3E00;
   color: white;
   border: none;
   border-radius: 6px;
@@ -220,11 +246,12 @@ body {
   font-size: 0.85rem;
   transition: background 0.2s;
 }
+
 .tinyBtn:hover {
-  background: #ff6a1f;
+  background: #6F2A00;
 }
 
-/* Modal styles */
+/* Modal */
 .modal {
   position: fixed;
   top: 0;
@@ -237,6 +264,7 @@ body {
   align-items: center;
   z-index: 2000;
 }
+
 .modal-content {
   background: #fff;
   border-radius: 12px;
@@ -246,14 +274,16 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   position: relative;
 }
+
 .modal-actions {
   margin-top: 20px;
   display: flex;
   justify-content: center;
   gap: 12px;
 }
+
 .button {
-  background: #ff8a4b;
+  background: #9A3E00;
   color: #fff;
   border: none;
   border-radius: 20px;
@@ -262,32 +292,37 @@ body {
   font-weight: 600;
   transition: background 0.2s;
 }
+
 .button:hover {
-  background: #ff6a1f;
+  background: #6F2A00;
 }
+
 .button.secondary {
   background: transparent;
-  color: #ff8a4b;
-  border: 2px solid #ff8a4b;
+  color: #9A3E00;
+  border: 2px solid #9A3E00;
 }
+
 .button.secondary:hover {
-  background: #fff0e6;
+  background: #F5E9DD;
 }
+
 .button.tertiary {
   background: transparent;
   color: #666;
   border: none;
 }
+
 .button.tertiary:hover {
   background: #f5f5f5;
 }
 
-/* Floating add button at bottom right of screen */
+/* Floating Button */
 .floating-add-btn {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #ff8a4b;
+  background-color: #9A3E00;
   border: none;
   color: white;
   font-size: 24px;
@@ -302,47 +337,54 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .floating-add-btn:hover {
   transform: scale(1.1);
-  background-color: #ff6a1f;
+  background-color: #6F2A00;
 }
 
-/* Add recipe form styles */
+/* Add Recipe */
 .addRecipe .modal-content {
   background: #fffdf9;
   text-align: left;
 }
+
 .close-btn {
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #999;
+  color: #777;
   position: absolute;
   top: 16px;
   right: 16px;
   padding: 4px;
   line-height: 1;
 }
+
 .close-btn:hover {
-  color: #ff6a1f;
+  color: #9A3E00;
 }
+
 .addRecipe h3 {
   margin: 0 0 20px 0;
-  color: #ff8a4b;
+  color: #9A3E00;
   text-align: center;
 }
+
 .addRecipe form {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
+
 .addRecipe label {
   display: block;
   margin-bottom: 4px;
   font-weight: 600;
   color: #333;
 }
+
 .addRecipe input,
 .addRecipe select {
   width: 100%;
@@ -352,26 +394,31 @@ body {
   font-size: 14px;
   box-sizing: border-box;
 }
+
 .addRecipe input:focus,
 .addRecipe select:focus {
   outline: none;
-  border-color: #ff8a4b;
-  box-shadow: 0 0 0 2px rgba(255, 138, 75, 0.2);
+  border-color: #9A3E00;
+  box-shadow: 0 0 0 2px rgba(154, 62, 0, 0.25);
 }
+
 .addRecipe hr {
   border: none;
-  border-top: 1px solid #f0d9c7;
+  border-top: 1px solid #F5E9DD;
   margin: 16px 0;
 }
+
 .form-actions {
   display: flex;
   gap: 12px;
   margin-top: 20px;
 }
+
 .form-actions .button {
   flex: 1;
 }
 
+/* Footer */
 footer {
   text-align: center;
   padding: 32px 16px;
@@ -380,7 +427,7 @@ footer {
   margin-top: 40px;
 }
 
-/* Responsiveness */
+/* Responsive */
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -451,5 +498,23 @@ footer {
 
   .form-actions {
     flex-direction: column;
+  }
+
+  .filter-menu {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1500;
+  }
+
+  .hidden {
+    display: none !important;
   }
 }

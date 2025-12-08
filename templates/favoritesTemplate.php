@@ -44,14 +44,22 @@
       <!-- Page Control Buttons (will likely change to a popup or smth)-->
       <!-- Addresses filter and sort functionality -->
       <div class="controls">
-        <button id="gridBtn">Grid</button>
-        <button id="listBtn">List</button>
-        <button id="filterBtn">Filter / Sort</button>
-        <button id="addBtn">+ Add</button>
+      <button id="gridBtn">Grid</button>
+      <button id="listBtn">List</button>
+      <button id="filterBtn">Filter / Sort</button>
 
-        <!-- AJAX Load More Button -->
-        <button id="loadMoreBtn" class="button secondary">Load More Recipes</button>
+      <div id="filterMenu" class="hidden filter-menu">
+        <button class="sortAZ">Sort A–Z</button>
+        <button class="filterGenre">Filter by Genre</button>
+        <button class="resetFilter">Reset Filters</button>
       </div>
+
+  <button id="addBtn">+ Add</button>
+
+  <!-- AJAX Load More Button -->
+  <button id="loadMoreBtn" class="button secondary">Load More Recipes</button>
+</div>
+
 
       <!-- Grid View -->
       <section id="gridView" class="view">
@@ -446,6 +454,63 @@ function attachEventListeners() {
             if (e.target === m) m.classList.add("hidden");
           });
         });
+        // Toggle the filter menu
+  document.getElementById("filterBtn").addEventListener("click", () => {
+  document.getElementById("filterMenu").classList.toggle("hidden");
+  });
+
+// SORT A–Z
+  document.querySelector(".sortAZ").addEventListener("click", () => {
+  sortCards(true);
+  });
+
+  // FILTER BY GENRE
+  document.querySelector(".filterGenre").addEventListener("click", () => {
+  const genre = prompt("Enter genre to filter by:");
+  if (!genre) return;
+
+  const genreLower = genre.toLowerCase();
+
+  // Filter GRID VIEW
+  document.querySelectorAll(".card").forEach(card => {
+    const desc = card.querySelector(".quickDesc").textContent.toLowerCase();
+    card.style.display = desc.includes(genreLower) ? "block" : "none";
+  });
+
+  // Filter LIST VIEW
+  document.querySelectorAll(".list-item").forEach(item => {
+    const desc = item.querySelector("p").textContent.toLowerCase();
+    item.style.display = desc.includes(genreLower) ? "flex" : "none";
+  });
+});
+
+
+// Resetting fiolters 
+document.querySelector(".resetFilter").addEventListener("click", () => {
+  // Reset GRID VIEW
+  document.querySelectorAll(".card").forEach(card => {
+    card.style.display = "block";
+  });
+
+  // Reset LIST VIEW
+  document.querySelectorAll(".list-item").forEach(item => {
+    item.style.display = "flex";
+  });
+});
+
+
+function sortCards(ascending = true) {
+  const grid = document.getElementById("recipeGrid");
+  const cards = Array.from(grid.children);
+
+  cards.sort((a, b) => {
+    const nameA = a.querySelector(".dish").textContent.toLowerCase();
+    const nameB = b.querySelector(".dish").textContent.toLowerCase();
+    return ascending ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+  });
+
+  cards.forEach(card => grid.appendChild(card));
+}
       });
     </script>
   </body>
