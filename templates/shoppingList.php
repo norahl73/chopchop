@@ -36,7 +36,7 @@
 
     <!-- Main Content -->
     <main class="shopping-main">
-      <h1>Your Shopping List</h1>
+      <h1 style="color:white">Your Shopping List</h1>
 
       <div class="shopping-list-container">
         <!-- Add New Ingredient -->

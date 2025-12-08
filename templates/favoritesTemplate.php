@@ -151,36 +151,36 @@
       <!-- Addresses adding recipe to library functionality -->
       <!-- also handles user data entry -->
       <div id="addRecipeModal" class="modal hidden">
-            <div class="modal-content">
-              <button id="closeAddModal" class="close-btn">×</button>
-              <h2>Add a New Recipe</h2>
-              <form method="POST" enctype="multipart/form-data">
-              <input type="hidden" name="add_recipe" value="1">
+        <div class="modal-content">
+          <button id="closeAddModal" class="close-btn">×</button>
+          <h2>Add a New Recipe</h2>
+          <form method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="add_recipe" value="1">
 
-              <label for="title">Recipe Title</label>
-              <input type="text" id="title" name="title" required> <br />
+            <label for="title">Recipe Title</label>
+            <input type="text" id="title" name="title" required>
 
-              <label for="genre">Genre</label>
-              <input type="text" id="genre" name="genre" required><br />
+            <label for="genre">Genre</label>
+            <input type="text" id="genre" name="genre" required>
 
-              <label for="time_takes">Time (minutes)</label>
-              <input type="number" id="time_takes" name="time_takes" required><br />
+            <label for="time_takes">Time (minutes)</label>
+            <input type="number" id="time_takes" name="time_takes" required>
 
-              <label>Ingredients</label>
-              <div id="ingredient-list">
+            <label>Ingredients</label>
+            <div id="ingredient-list">
               <input type="text" name="ingredients[]" placeholder="Ingredient 1" required>
-              </div>
-              <button type="button" id="addIngredientBtn" class="button secondary">+ Add Ingredient</button><br />
+            </div>
+            <button type="button" id="addIngredientBtn" class="button secondary">+ Add Ingredient</button>
 
-              <label for="instructions">Instructions</label><br />
-              <textarea id="instructions" name="instructions" required></textarea><br />
+            <label for="instructions">Instructions</label>
+            <textarea id="instructions" name="instructions" rows="6" required></textarea>
 
-              <label for="image">Upload Image</label>
-              <input type="file" id="image" name="image" accept="image/*"><br />
+            <label for="image">Upload Image</label>
+            <input type="file" id="image" name="image" accept="image/*">
 
-              <button type="submit" class="button">Add Recipe</button>
-            </form>
-          </div>
+            <button type="submit" class="button">Add Recipe</button>
+          </form>
+        </div>
       </div>
     </main>
 
@@ -514,4 +514,3 @@ function sortCards(ascending = true) {
       });
     </script>
   </body>
-

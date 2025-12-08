@@ -36,7 +36,7 @@
 
     <main class="profile-main">
       <section class="profile-info">
-        <h1>Your Profile</h1>
+        <h1 style="color:white">Your Profile</h1>
         <p>Welcome, <?= htmlspecialchars($_SESSION['username'] ?? 'Guest') ?>!</p>
 
         <!-- Logout Button -->
